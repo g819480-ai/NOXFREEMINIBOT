@@ -382,6 +382,24 @@ async function noxPair(number, res = null) {
 
         pendingSockets.set(sanitizedNumber, conn);
         noxStore.bind(conn.ev);
+        const pairingReady = !conn.authState.creds.registered
+    ? new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+            conn.ev.off('connection.update', onPairingReady);
+            reject(new Error('WhatsApp pairing initialization timed out'));
+        }, 30000);
+
+        const onPairingReady = (update) => {
+            if (update.qr) {
+                clearTimeout(timeout);
+                conn.ev.off('connection.update', onPairingReady);
+                resolve();
+            }
+        };
+
+        conn.ev.on('connection.update', onPairingReady);
+    })
+    : Promise.resolve();
 
         // Setup handlers
         setupCallHandlers(conn, number);
