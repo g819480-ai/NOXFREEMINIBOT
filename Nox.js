@@ -1036,7 +1036,7 @@ router.delete('/admin/api/users/:number', requireAdmin, async (req, res) => {
         });
     }
 });
-router.get('/disconnect', async (req, res) => {
+router.get('/disconnect', requireAdmin, async (req, res) => {
     const { number } = req.query;
     if (!number) return res.status(400).json({ error: 'Number required' });
     const n = number.replace(/[^0-9]/g, '');
