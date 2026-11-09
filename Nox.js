@@ -651,6 +651,8 @@ router.post('/api/pair', async (req, res) => {
     await noxPair(number, res);
 });
 
+ adminRemovedNumbers.delete(number);
+
 // ── Compatibilité avec pair.html ───────────────────────────────────
 
 const pendingCodes = new Map();
