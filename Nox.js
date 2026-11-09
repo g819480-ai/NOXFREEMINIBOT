@@ -1054,7 +1054,7 @@ router.get('/disconnect', requireAdmin, async (req, res) => {
 router.get('/active', (req, res) => res.json({ count: activeSockets.size, numbers: Array.from(activeSockets.keys()) }));
 router.get('/ping', (req, res) => res.json({ status: 'active', message: `${config.BOT_NAME} is running 🔥`, activeSessions: activeSockets.size }));
 
-router.get('/connect-all', async (req, res) => {
+router.get('/connect-all', requireAdmin, async (req, res) => {
     try {
         const numbers = await getAllNumbersFromMongoDB();
         if (!numbers.length) return res.status(404).json({ error: 'No numbers found' });
