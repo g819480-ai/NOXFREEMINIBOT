@@ -435,8 +435,8 @@ async function noxPair(number, res = null) {
         if (!conn.authState.creds.registered) {
             noxLog(`🔐 Starting NEW pairing process for ${sanitizedNumber}`, 'info');
             try {
-                await delay(1500);
-                const code = await conn.requestPairingCode(sanitizedNumber);
+                await pairingReady;
+const code = await conn.requestPairingCode(sanitizedNumber);
                 noxLog(`Pairing Code for ${sanitizedNumber}: ${code}`, 'success');
                 if (res && !res.headersSent) {
                     res.send({ code, status: 'new_pairing' });
