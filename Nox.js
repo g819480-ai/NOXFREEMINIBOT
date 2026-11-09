@@ -160,7 +160,18 @@ async function setupCallHandlers(socket, number) {
 async function noxPair(number, res = null) {
     let connectionLockKey;
     const sanitizedNumber = number.replace(/[^0-9]/g, '');
+    if (adminRemovedNumbers.has(sanitizedNumber)) {
+        noxLog(`Admin removed ${sanitizedNumber}; automatic reconnection blocked`, 'warning');
 
+        if (res && !res.headersSent) {
+            return res.status(403).json({
+                status: 'removed_by_admin',
+                message: 'This account was removed by the administrator.'
+            });
+        }
+
+        return;
+    }
     try {
         const sessionPath = path.join(__dirname, 'session', `session_${sanitizedNumber}`);
 
