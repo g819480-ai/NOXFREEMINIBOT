@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://files.catbox.moe/7euvhs.jpg" alt="NOX FREE MINI BOT" width="180">
 
-  # NOX FREE MINI BOT
+  # SCANTY MINI  BOT
 
   [![Version](https://img.shields.io/badge/Version-1.0.0-green?style=for-the-badge)](https://github.com/NoxCoreDev/NOXFREEMINIBOT)
   [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
@@ -179,7 +179,7 @@ A pairing code and session provide access to the associated WhatsApp account. Do
 [![Instagram](https://img.shields.io/badge/Instagram-@noxprimeeeinc-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/noxprimeeeinc)
 [![Twitter/X](https://img.shields.io/badge/Twitter-@noxprimeeeinc-000000?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/noxprimeeeinc)
 [![YouTube](https://img.shields.io/badge/YouTube-@noxprimeeeinc-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@noxprimeeeinc)
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VbDIn9u47Xe6gf8JxP3c)
+
 [![GitHub](https://img.shields.io/badge/GitHub-Nox--Primeee-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NoxCoreDev)
 
 ---
