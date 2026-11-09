@@ -561,6 +561,7 @@ Enjoy the features and commands. Have fun! 🚀
 }
 
             if (connection === 'close') {
+                }
                 const statusCode = lastDisconnect && lastDisconnect.error && lastDisconnect.error.output && lastDisconnect.error.output.statusCode;
                 const errorMessage = lastDisconnect && lastDisconnect.error && lastDisconnect.error.message;
 
