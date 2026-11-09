@@ -686,6 +686,7 @@ router.post('/start-pair', async (req, res) => {
 
     pairingRequests.delete(number);
     pendingCodes.delete(number);
+    adminRemovedNumbers.delete(number);
     pairingRequests.set(number, { startedAt: Date.now() });
     pendingCodes.set(number, { status: 'pending' });
 
