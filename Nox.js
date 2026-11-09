@@ -938,6 +938,42 @@ router.get('/status', async (req, res) => {
     res.json({ number, isConnected: s.isConnected, connectionTime: s.connectionTime, uptime: `${s.uptime} seconds` });
 });
 
+// ====================================
+// ADMIN: LIST CONNECTED USERS
+// ====================================
+
+router.get('/admin/api/users', requireAdmin, async (req, res) => {
+    try {
+        const savedNumbers = await getAllNumbersFromMongoDB();
+        const numbers = new Set([
+            ...savedNumbers,
+            ...activeSockets.keys()
+        ]);
+
+        const users = Array.from(numbers).map(number => {
+            const status = getConnectionStatus(number);
+
+            return {
+                number,
+                connected: activeSockets.has(number),
+                connectionTime: status.connectionTime || null,
+                uptime: status.uptime || 0
+            };
+        });
+
+        return res.json({
+            total: users.length,
+            users
+        });
+
+    } catch (error) {
+        console.error('Admin user list error:', error.message);
+        return res.status(500).json({
+            error: 'Could not load users'
+        });
+    }
+});
+
 router.get('/disconnect', async (req, res) => {
     const { number } = req.query;
     if (!number) return res.status(400).json({ error: 'Number required' });
