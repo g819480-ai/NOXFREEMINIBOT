@@ -67,6 +67,83 @@ const pendingSockets = new Map();
 
 const adminRemovedNumbers = new Set();
 
+// ====================================
+// ADMIN AUTHENTICATION
+// ====================================
+
+const adminLoginAttempts = new Map();
+const ADMIN_COOKIE = 'scanty_admin';
+const ADMIN_SESSION_DURATION = 4 * 60 * 60 * 1000;
+
+function createAdminToken() {
+    const timestamp = Date.now().toString();
+
+    const signature = crypto
+        .createHmac('sha256', process.env.ADMIN_PASSWORD)
+        .update(timestamp)
+        .digest('hex');
+
+    return `${timestamp}.${signature}`;
+}
+
+function isAdminAuthenticated(req) {
+    try {
+        const password = process.env.ADMIN_PASSWORD;
+
+        if (!password) return false;
+
+        const cookies = req.headers.cookie || '';
+        const match = cookies
+            .split(';')
+            .map(item => item.trim())
+            .find(item => item.startsWith(`${ADMIN_COOKIE}=`));
+
+        if (!match) return false;
+
+        const token = decodeURIComponent(
+            match.substring(ADMIN_COOKIE.length + 1)
+        );
+
+        const parts = token.split('.');
+        if (parts.length !== 2) return false;
+
+        const [timestamp, signature] = parts;
+        const issuedAt = Number(timestamp);
+
+        if (!Number.isFinite(issuedAt)) return false;
+
+        if (
+            Date.now() - issuedAt < 0 ||
+            Date.now() - issuedAt > ADMIN_SESSION_DURATION
+        ) return false;
+
+        const expected = crypto
+            .createHmac('sha256', password)
+            .update(timestamp)
+            .digest('hex');
+
+        const suppliedBuffer = Buffer.from(signature, 'hex');
+        const expectedBuffer = Buffer.from(expected, 'hex');
+
+        return suppliedBuffer.length === expectedBuffer.length &&
+            crypto.timingSafeEqual(suppliedBuffer, expectedBuffer);
+
+    } catch (_) {
+        return false;
+    }
+}
+
+function requireAdmin(req, res, next) {
+    if (!isAdminAuthenticated(req)) {
+        return res.status(401).json({
+            error: 'Admin authentication required'
+        });
+    }
+
+    next();
+}
+
+
 function createNoxStore() {
     const store = {
         messages: {},
