@@ -9,7 +9,7 @@ const style = require('../lib/style');
 
 cmd({
     pattern: 'vv',
-    alias: ['sendme'],
+alias: ['sendme', 'save'],
     react: '👀',
     desc: 'Owner only - Forward quoted message to your DM',
     category: 'owner',
