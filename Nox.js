@@ -772,6 +772,10 @@ function sendNoxPairPage(req, res) {
 router.get('/', sendNoxPairPage);
 router.get('/pair.html', sendNoxPairPage);
 router.get('/pair-page', sendNoxPairPage);
+router.get('/admin', (req, res) => {
+    const adminPage = fs.readFileSync(path.join(__dirname, 'admin.html'), 'utf8');
+    return res.type('html').send(adminPage);
+});
 
 router.get('/code', async (req, res) => {
     if (!req.query.number) {
