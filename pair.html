@@ -538,7 +538,6 @@
         }
     });
   </script>
-      });
 
     // ADMIN PANEL
     const adminLink = document.createElement("a");
@@ -558,7 +557,7 @@
 
     document.body.appendChild(adminLink);
 
-    fetch("/admin/api/me", {
+  fetch("/admin/api/me", {
         credentials: "same-origin"
     })
     .then(res => res.json())
@@ -567,6 +566,6 @@
             adminLink.style.display = "block";
         }
     })
-    .catch(() => {});
+  .catch(() => {});
 </body>
 </html>
