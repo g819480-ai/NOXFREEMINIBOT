@@ -62,7 +62,10 @@ const pairingRequests = new Map();
 // Socket(s) that are waiting for the WhatsApp pairing to finish.
 // A new request for the same number replaces the old pending socket.
 const pendingSockets = new Map();
+// Numbers permanently removed by admin.
+// Prevents automatic reconnection after removal.
 
+const adminRemovedNumbers = new Set();
 
 function createNoxStore() {
     const store = {
