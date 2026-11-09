@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCANTY MINI BOT — Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080d18;color:#eef3ff;font-family:Arial,sans-serif;padding:20px}
+.wrap{max-width:850px;margin:35px auto}
+.card{background:#111b2d;border:1px solid #263750;border-radius:16px;padding:24px;margin-bottom:18px}
+h1{margin:0 0 8px;color:#65a9ff}
+p{color:#9eacc2;line-height:1.5}
+input{width:100%;padding:14px;background:#080f1d;border:1px solid #344762;border-radius:9px;color:white;margin:12px 0}
+button{padding:12px 17px;border:0;border-radius:8px;background:#2679df;color:white;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.5}
+.danger{background:#c63745}
+.secondary{background:#34445d}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.user{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:16px 0;border-bottom:1px solid #263750;flex-wrap:wrap}
+.status{font-size:12px;color:#55d99a}
+.offline{color:#aab5c5}
+.small{font-size:12px;color:#8293ad}
+.hidden{display:none}
+#error{color:#ff737e}
+#success{color:#55d99a}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>NOX FREE MINI BOT</h1>
+    <p>Private administrator dashboard</p>
+  </div>
+
+  <div id="login" class="card">
+    <h2>Admin Login</h2>
+    <p>Enter your administrator password.</p>
+    <form id="loginForm">
+      <input id="password" type="password" placeholder="Admin password" required>
+      <button type="submit">Sign In</button>
+    </form>
+    <p id="error"></p>
+  </div>
+
+  <div id="dashboard" class="hidden">
+    <div class="card">
+      <div class="top">
+        <div>
+          <h2>Connected Users</h2>
+          <p>Manage saved WhatsApp accounts.</p>
+        </div>
+        <div>
+          <button id="refresh" class="secondary">Refresh</button>
+          <button id="logout" class="secondary">Logout</button>
+        </div>
+      </div>
+      <h1 id="count">0</h1>
+      <p>Total saved or active users</p>
+      <p id="success"></p>
+      <p id="listError"></p>
+    </div>
+
+    <div class="card">
+      <h2>User Accounts</h2>
+      <div id="users">Loading users...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const loginBox = document.getElementById('login');
+const dashboard = document.getElementById('dashboard');
+const errorBox = document.getElementById('error');
+const successBox = document.getElementById('success');
+const usersBox = document.getElementById('users');
+
+async function request(url, options = {}) {
+  const response = await fetch(url, {
+    credentials: 'same-origin',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    }
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.error || data.message || 'Request failed');
+  }
+
+  return data;
+}
+
+function showDashboard() {
+  loginBox.classList.add('hidden');
+  dashboard.classList.remove('hidden');
+  loadUsers();
+}
+
+async function checkLogin() {
+  try {
+    const data = await request('/admin/api/me');
+    if (data.authenticated) {
+      showDashboard();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+document.getElementById('loginForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  errorBox.textContent = '';
+
+  const password = document.getElementById('password').value;
+
+  try {
+    await request('/admin/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ password })
+    });
+
+    document.getElementById('password').value = '';
+    showDashboard();
+  } catch (error) {
+    errorBox.textContent = error.message;
+  }
+});
+
+async function loadUsers() {
+  usersBox.textContent = 'Loading users...';
+  document.getElementById('listError').textContent = '';
+
+  try {
+    const data = await request('/admin/api/users');
+    const users = Array.isArray(data.users) ? data.users : [];
+
+    document.getElementById('count').textContent = users.length;
+    usersBox.replaceChildren();
+
+    if (!users.length) {
+      usersBox.textContent = 'No saved users found.';
+      return;
+    }
+
+    users.forEach(user => {
+      const number = String(user.number || user.phone || '');
+      if (!number) return;
+
+      const row = document.createElement('div');
+      row.className = 'user';
+
+      const details = document.createElement('div');
+
+      const phone = document.createElement('strong');
+      phone.textContent = number;
+
+      const status = document.createElement('div');
+      status.className = user.status === 'connected' || user.status === 'open'
+        ? 'status'
+        : 'status offline';
+      status.textContent = user.status || 'Saved';
+
+      details.append(phone, status);
+
+      const remove = document.createElement('button');
+      remove.className = 'danger';
+      remove.textContent = 'Remove User';
+
+      remove.addEventListener('click', async () => {
+        if (!confirm(
+          'Permanently remove ' + number + '?\n\nThis will delete the saved session and associated user data.'
+        )) return;
+
+        remove.disabled = true;
+        remove.textContent = 'Removing...';
+
+        try {
+          await request('/admin/api/users/' + encodeURIComponent(number), {
+            method: 'DELETE'
+          });
+
+          successBox.textContent = number + ' was removed.';
+          await loadUsers();
+        } catch (error) {
+          document.getElementById('listError').textContent = error.message;
+          remove.disabled = false;
+          remove.textContent = 'Remove User';
+        }
+      });
+
+      row.append(details, remove);
+      usersBox.appendChild(row);
+    });
+  } catch (error) {
+    usersBox.textContent = 'Could not load users.';
+    document.getElementById('listError').textContent = error.message;
+  }
+}
+
+document.getElementById('refresh').addEventListener('click', loadUsers);
+
+document.getElementById('logout').addEventListener('click', async () => {
+  try {
+    await request('/admin/api/logout', { method: 'POST' });
+  } catch (error) {
+    console.error(error);
+  }
+
+  dashboard.classList.add('hidden');
+  loginBox.classList.remove('hidden');
+  successBox.textContent = '';
+});
+
+checkLogin();
+</script>
+</body>
+</html>
