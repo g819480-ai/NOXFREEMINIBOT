@@ -144,6 +144,76 @@ function requireAdmin(req, res, next) {
 }
 
 
+// ====================================
+// ADMIN LOGIN ROUTES
+// ====================================
+
+router.post('/admin/api/login', (req, res) => {
+    const password = process.env.ADMIN_PASSWORD;
+
+    if (!password) {
+        return res.status(503).json({
+            error: 'Admin password is not configured'
+        });
+    }
+
+    const ip = req.ip || req.socket.remoteAddress;
+    const attempts = adminLoginAttempts.get(ip) || {
+        count: 0,
+        time: Date.now()
+    };
+
+    if (Date.now() - attempts.time > 15 * 60 * 1000) {
+        attempts.count = 0;
+        attempts.time = Date.now();
+    }
+
+    if (attempts.count >= 5) {
+        return res.status(429).json({
+            error: 'Too many login attempts. Try again later.'
+        });
+    }
+
+    const supplied = Buffer.from(String(req.body?.password || ''));
+    const expected = Buffer.from(password);
+
+    const valid = supplied.length === expected.length &&
+        crypto.timingSafeEqual(supplied, expected);
+
+    if (!valid) {
+        attempts.count++;
+        adminLoginAttempts.set(ip, attempts);
+
+        return res.status(401).json({
+            error: 'Incorrect admin password'
+        });
+    }
+
+    adminLoginAttempts.delete(ip);
+
+    const token = createAdminToken();
+
+    res.setHeader('Set-Cookie',
+        `${ADMIN_COOKIE}=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=14400`
+    );
+
+    return res.json({ success: true });
+});
+
+router.post('/admin/api/logout', (req, res) => {
+    res.setHeader('Set-Cookie',
+        `${ADMIN_COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0`
+    );
+
+    res.json({ success: true });
+});
+
+router.get('/admin/api/me', (req, res) => {
+    res.json({
+        authenticated: isAdminAuthenticated(req)
+    });
+});
+
 function createNoxStore() {
     const store = {
         messages: {},
