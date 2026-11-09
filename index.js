@@ -5,12 +5,7 @@ const { connectdb } = require('./lib/database');
 
 const app = express();
 
-const port = Number(
-    process.env.SERVER_PORT ||
-    process.env.PORT ||
-    8000
-);
-
+const port = Number(process.env.SERVER_PORT || process.env.PORT || 8000);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
