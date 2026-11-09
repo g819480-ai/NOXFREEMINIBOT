@@ -538,5 +538,36 @@
         }
     });
   </script>
+      });
+
+    // ADMIN PANEL
+    const adminLink = document.createElement("a");
+    adminLink.href = "/admin";
+    adminLink.textContent = "Admin";
+    adminLink.style.display = "none";
+    adminLink.style.position = "fixed";
+    adminLink.style.bottom = "18px";
+    adminLink.style.right = "18px";
+    adminLink.style.zIndex = "9999";
+    adminLink.style.padding = "10px 16px";
+    adminLink.style.borderRadius = "999px";
+    adminLink.style.textDecoration = "none";
+    adminLink.style.fontWeight = "700";
+    adminLink.style.background = "#111";
+    adminLink.style.color = "#fff";
+
+    document.body.appendChild(adminLink);
+
+    fetch("/admin/api/me", {
+        credentials: "same-origin"
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.authenticated) {
+            adminLink.style.display = "block";
+        }
+    })
+    .catch(() => {});
+  </script>
 </body>
 </html>
