@@ -932,9 +932,28 @@ router.get('/get-code', (req, res) => {
 router.get('/status', async (req, res) => {
     const { number } = req.query;
     if (!number) {
-        const list = Array.from(activeSockets.keys()).map(n => { const s = getConnectionStatus(n); return { number: n, status: 'connected', connectionTime: s.connectionTime, uptime: `${s.uptime} seconds` }; });
-        return res.json({ totalActive: activeSockets.size, connections: list });
+    if (!isAdminAuthenticated(req)) {
+        return res.json({
+            totalActive: activeSockets.size,
+            connections: []
+        });
     }
+
+    const list = Array.from(activeSockets.keys()).map(n => {
+        const s = getConnectionStatus(n);
+        return {
+            number: n,
+            status: 'connected',
+            connectionTime: s.connectionTime,
+            uptime: `${s.uptime} seconds`
+        };
+    });
+
+    return res.json({
+        totalActive: activeSockets.size,
+        connections: list
+    });
+}
     const s = getConnectionStatus(number);
     res.json({ number, isConnected: s.isConnected, connectionTime: s.connectionTime, uptime: `${s.uptime} seconds` });
 });
