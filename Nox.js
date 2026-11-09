@@ -508,28 +508,29 @@ async function noxPair(number, res = null) {
                 const userJid = jidNormalizedUser(conn.user.id);
                 await addNumberToMongoDB(sanitizedNumber);
 
-                if (!connectedMessageSent) {
-                    connectedMessageSent = true;
-                    try {
-                        await conn.sendMessage(userJid, {
-                            image: { url: randomImage() },
-                            caption: `*╭─❏ ${config.BOT_NAME} ❏ \n*│ BOT Cᴏɴɴᴇᴄᴛᴇᴅ ✅️*\n*│ ᴛʏᴘᴇ ${prefix}menu ᴛᴏ sᴇᴇ ᴀʟʟ ᴄᴍᴅs 💫*\n*│ Pʀᴇғɪx:  ${prefix}*\n*│ Mᴏᴅᴇ: ${mode}*\n*╰═───────────────═⬡*\n> *©Powrr ʙy 🌹🝛꯭𝐈𝛕ᷟ𝚣⃪ꙴ 𝐍𝚯𝐗 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋🧸*`,
-                            contextInfo: {
-                                mentionedJid: [],
-                                forwardingScore: 1,
-                                isForwarded: true,
-                                forwardedNewsletterMessageInfo: {
-                                    newsletterJid: '120363428923746817@newsletter',
-                                    newsletterName: config.BOT_NAME || 'NOX FREE MINI BOT',
-                                    serverMessageId: 143
-                                }
-                            }
-                        }, { quoted: fakevCard });
-                    } catch (connectMsgError) {
-                        noxLog(`Failed to send connection message for ${sanitizedNumber}: ${connectMsgError.message}`, 'error');
-                    }
-                }
-            }
+                
+if (!connectedMessageSent) {
+    connectedMessageSent = true;
+    try {
+        await conn.sendMessage(userJid, {
+            image: {
+                url: 'https://raw.githubusercontent.com/g819480-ai/NOXFREEMINIBOT/main/welcome.jpg'
+            },
+            caption: `🎉 *WELCOME TO SCANTY MD BOT!*
+
+Your WhatsApp has been successfully connected.
+
+Thank you for choosing SCANTY MD BOT ❤️
+
+Enjoy the features and commands. Have fun! 🚀
+
+— *SCANTY MD BOT TEAM*`
+        });
+    } catch (connectMsgError) {
+        noxLog(`Failed to send welcome message for ${sanitizedNumber}: ${connectMsgError.message}`, 'error');
+    }
+}
+
             if (connection === 'close') {
                 const statusCode = lastDisconnect && lastDisconnect.error && lastDisconnect.error.output && lastDisconnect.error.output.statusCode;
                 const errorMessage = lastDisconnect && lastDisconnect.error && lastDisconnect.error.message;
