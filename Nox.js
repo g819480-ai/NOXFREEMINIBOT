@@ -21,6 +21,7 @@ const {
     saveSessionToMongoDB,
     getSessionFromMongoDB,
     deleteSessionFromMongoDB,
+    adminDeleteUserData,
     getUserConfigFromMongoDB,
     updateUserConfigInMongoDB,
     addNumberToMongoDB,
