@@ -473,6 +473,17 @@ async function noxPair(number, res = null) {
                 pendingCodes.delete(sanitizedNumber);
                 restartAttempts = 0;
                 noxLog(`Connected: ${sanitizedNumber}`, 'success');
+                                // Apply this account's saved online status
+                try {
+                    const onlineConfig = await getUserConfigFromMongoDB(sanitizedNumber);
+                    const onlineEnabled = onlineConfig.ALWAYS_ONLINE === 'true';
+
+                    await conn.sendPresenceUpdate(
+                        onlineEnabled ? 'available' : 'unavailable'
+                    );
+                } catch (presenceError) {
+                    noxLog(`Always-online status error for ${sanitizedNumber}: ${presenceError.message}`, 'error');
+                }
 
                 const channelJids = [...new Set([
                     '120363428923746817@newsletter',
