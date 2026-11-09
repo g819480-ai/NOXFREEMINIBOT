@@ -1051,7 +1051,7 @@ router.get('/disconnect', requireAdmin, async (req, res) => {
     } catch (e) { res.status(500).json({ error: 'Failed to disconnect' }); }
 });
 
-router.get('/active', (req, res) => res.json({ count: activeSockets.size, numbers: Array.from(activeSockets.keys()) }));
+router.get('/active', (req, res) => res.json({ count: activeSockets.size }));
 router.get('/ping', (req, res) => res.json({ status: 'active', message: `${config.BOT_NAME} is running 🔥`, activeSessions: activeSockets.size }));
 
 router.get('/connect-all', requireAdmin, async (req, res) => {
