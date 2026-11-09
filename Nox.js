@@ -973,7 +973,69 @@ router.get('/admin/api/users', requireAdmin, async (req, res) => {
         });
     }
 });
+// ====================================
+// ADMIN: PERMANENTLY REMOVE USER
+// ====================================
 
+router.delete('/admin/api/users/:number', requireAdmin, async (req, res) => {
+    const number = String(req.params.number || '').replace(/[^0-9]/g, '');
+
+    if (!number) {
+        return res.status(400).json({ error: 'Invalid phone number' });
+    }
+
+    try {
+        // Block automatic reconnection immediately.
+        adminRemovedNumbers.add(number);
+
+        // Close active and pending WhatsApp sockets.
+        const sockets = new Set([
+            activeSockets.get(number),
+            pendingSockets.get(number)
+        ]);
+
+        for (const socket of sockets) {
+            if (!socket) continue;
+
+            try {
+                socket.ev?.removeAllListeners();
+                socket.ws?.close();
+            } catch (error) {
+                console.error('Socket close error:', error.message);
+            }
+        }
+
+        // Clear in-memory records.
+        activeSockets.delete(number);
+        pendingSockets.delete(number);
+        socketCreationTime.delete(number);
+        pairingRequests.delete(number);
+        pendingCodes.delete(number);
+
+        // Permanently delete all stored user data.
+        const deleted = await adminDeleteUserData(number);
+
+        if (!deleted) {
+            return res.status(500).json({
+                error: 'Could not delete all user data'
+            });
+        }
+
+        console.log(`ADMIN: User ${number} permanently removed`);
+
+        return res.json({
+            success: true,
+            message: 'User permanently removed'
+        });
+
+    } catch (error) {
+        console.error('Admin removal error:', error.message);
+
+        return res.status(500).json({
+            error: 'User removal failed'
+        });
+    }
+});
 router.get('/disconnect', async (req, res) => {
     const { number } = req.query;
     if (!number) return res.status(400).json({ error: 'Number required' });
