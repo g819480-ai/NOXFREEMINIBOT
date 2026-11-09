@@ -794,11 +794,12 @@ router.post('/api/pair', async (req, res) => {
     if (activeSockets.has(number)) {
         return res.status(400).json({ error: 'Ce numéro est déjà connecté au bot.' });
     }
-
+    
+ adminRemovedNumbers.delete(number);
     await noxPair(number, res);
 });
 
- adminRemovedNumbers.delete(number);
+
 
 // ── Compatibilité avec pair.html ───────────────────────────────────
 
