@@ -6,11 +6,10 @@
   [![Version](https://img.shields.io/badge/Version-1.0.0-green?style=for-the-badge)](https://github.com/NoxCoreDev/NOXFREEMINIBOT)
   [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
   [![Node.js](https://img.shields.io/badge/Node.js-24.x-green?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-  [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-brightgreen?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
-  [![Baileys](https://img.shields.io/badge/WhatsApp-Baileys-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://github.com/WhiskeySockets/Baileys)
-  [![Render](https://img.shields.io/badge/Render-Node%20guide-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/docs/deploy-node-express-app)
-  [![Railway](https://img.shields.io/badge/Railway-Node%20guide-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](https://docs.railway.com/quick-start)
-  [![Koyeb](https://img.shields.io/badge/Koyeb-Node%20guide-121212?style=for-the-badge)](https://www.koyeb.com/docs/deploy/express)
+  [![MongoDB]](https://www.mongodb.com/aBaileys](https://img.shields.io/badge/WhatsApp-Baileys-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://github.com/WhiskeySockets/Baileys)
+
+
+  
   [![Fork this repository](https://img.shields.io/badge/Fork_this_repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NoxCoreDev/NOXFREEMINIBOT/fork)
 
   <p><strong>An open-source WhatsApp multi-device bot built with Node.js and Baileys, featuring pairing-code setup, MongoDB-backed sessions, a web pairing page, and a modular plugin system for messaging, media, and group tools. Created by @NoxCoreDev.</strong></p>
@@ -34,35 +33,6 @@ NOX FREE MINI BOT is a multi-device WhatsApp bot built with [Baileys](https://gi
 ## Quick links
 
 | Resource | Link |
-| --- | --- |
-| Source code | [GitHub — NOXFREEMINIBOT](https://github.com/NoxCoreDev/NOXFREEMINIBOT) |
-| Fork this repository | [Create your own fork](https://github.com/NoxCoreDev/NOXFREEMINIBOT/fork) |
-| WhatsApp library | [Baileys — WhiskeySockets](https://github.com/WhiskeySockets/Baileys) |
-| Node.js 24.x | [Node.js downloads](https://nodejs.org/) |
-| Database | [MongoDB Atlas](https://www.mongodb.com/atlas) |
-| Render deployment guide | [Deploy a Node/Express app](https://render.com/docs/deploy-node-express-app) |
-| Railway deployment guide | [Deploy from GitHub](https://docs.railway.com/quick-start) |
-| Koyeb deployment guide | [Deploy an Express app](https://www.koyeb.com/docs/deploy/express) |
-| MongoDB connection guide | [Connect to an Atlas cluster](https://www.mongodb.com/docs/atlas/connect-to-database-deployment/) |
-
-## Requirements
-
-- **Node.js 24.x** and npm, as declared in `package.json`.
-- A MongoDB database reachable from the host. MongoDB Atlas is one option; database plans and quotas are separate from hosting.
-- A Linux server or Node.js hosting service that can run `npm start`, provide a `PORT` environment variable, and keep a long-running process alive.
-- Outbound network access to WhatsApp and MongoDB.
-- A WhatsApp account whose owner is authorized to pair it with the bot.
-
-The application serves its pairing page at `/` and its health response at `/ping`. It listens on `process.env.PORT`, falling back to port `8000` when `PORT` is not set.
-
-## Local installation
-
-```bash
-git clone https://github.com/NoxCoreDev/NOXFREEMINIBOT.git
-cd NOXFREEMINIBOT
-npm install
-cp .env.example .env
-```
 
 Edit `.env` locally and set at least `MONGODB_URI`. Never put a real database URI in this README, an issue, or a log, and never commit your local `.env` file.
 
@@ -127,21 +97,15 @@ A `systemd` service is another option. Protect the environment file (for example
 
 ### Render
 
-Create a **Web Service** from the GitHub repository. Use `npm install` as the build command and `npm start` as the start command. Set `MONGODB_URI` and any other required values in the service's secret environment settings. See the [Render Node/Express guide](https://render.com/docs/deploy-node-express-app).
-
-**Free-tier limitation:** Render says Free Web Services spin down after 15 minutes without inbound traffic, including existing WebSocket messages. The bot needs a persistent WhatsApp connection, so a free instance may sleep or disconnect and should not be treated as a reliable 24/7 bot host. Render also states that Free instances have other limitations and are intended for testing or hobby projects; check the [current Free plan terms](https://render.com/docs/free).
-
-### Railway
-
-Create a project from the GitHub repository, use the Node.js build process, and set the start command to `npm start`. Add `MONGODB_URI` and other private settings in the service's variables/secrets. See the [Railway Quick Start](https://docs.railway.com/quick-start).
-
-**Free-tier limitation:** Railway currently lists a 30-day trial with `$5` in credits, followed by `$1` per month in included usage; the Free plan lists up to `0.5 GB` of RAM per service after the trial. This is a limited usage allowance, not unlimited free hosting or a promise of 24/7 uptime. Review [current Railway pricing](https://railway.com/pricing) and monitor usage.
+Create a **Web Service** from the GitHub repository. Use `npm install` as the build command and `npm start` as the start command. Set `MONGODB_URI` and any other required values in the service's secret environment settings. See the [Render Node/Express guide](
+**Free-tier limitation:** Render says Free Web Services spin down after 15 minutes without inbound traffic, including existing WebSocket messages. The bot needs a persistent WhatsApp connection, so a free instance may sleep or disconnect and should not be treated as a reliable 24/7 bot host. Render also states that Free instances have other limitations and are intended for testing or hobby projects; check the [current Free plan terms Node.js build process, and set the start command to `npm start`. Add `MONGODB_URI` and other private settings in the service's variables/secrets. See the [Railway Quick Start]
+**Free-tier limitation:** Railway currently lists a 30-day trial with `$5` in credits, followed by `$1` per month in included usage; the Free plan lists up to `0.5 GB` of RAM per service after the trial. This is a limited usage allowance, not unlimited free hosting or a promise of 24/7 uptime. Review [) and monitor usage.
 
 ### Koyeb
 
-Create a **Web Service** from the GitHub repository and select the native Node.js buildpack rather than Docker. Use `npm start` and configure the required environment variables. The project has an HTTP server, so use a Web Service configuration. See Koyeb's [Express deployment guide](https://www.koyeb.com/docs/deploy/express).
+Create a **Web Service** from the GitHub repository and select the native Node.js buildpack rather than Docker. Use `npm start` and configure the required environment variables. The project has an HTTP server, so use a Web Service configuration. See Koyeb's 
 
-**Free-tier limitation:** Koyeb documents one Free Instance with `512 MB` RAM and `0.1 vCPU`; it is for Web Services only, cannot be used as a Worker Service, and scales to zero after one hour without traffic. Because this bot needs a persistent WhatsApp connection, that free instance is not suitable for dependable 24/7 operation. Check [Koyeb's current instance terms](https://www.koyeb.com/docs/reference/instances).
+**Free-tier limitation:** Koyeb documents one Free Instance with `512 MB` RAM and `0.1 vCPU`; it is for Web Services only, cannot be used as a Worker Service, and scales to zero after one hour without traffic. Because this bot needs a persistent WhatsApp connection, that free instance is not suitable for dependable 24/7 operation. Check
 
 ### Other Node.js hosts
 
@@ -175,15 +139,7 @@ A pairing code and session provide access to the associated WhatsApp account. Do
 
 ## Developer links
 
-[![Telegram](https://img.shields.io/badge/Telegram-@noxprimeeeinc-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/nox_chh)
-[![Instagram](https://img.shields.io/badge/Instagram-@noxprimeeeinc-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/noxprimeeeinc)
-[![Twitter/X](https://img.shields.io/badge/Twitter-@noxprimeeeinc-000000?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/noxprimeeeinc)
-[![YouTube](https://img.shields.io/badge/YouTube-@noxprimeeeinc-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@noxprimeeeinc)
 
-[![GitHub](https://img.shields.io/badge/GitHub-Nox--Primeee-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NoxCoreDev)
-
----
-
-<div align="center">
+-div align="center">
   <sub>© 2026 NOX PRIMEEE — NOX FREE MINI BOT</sub>
 </div>
