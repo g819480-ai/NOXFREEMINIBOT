@@ -545,7 +545,6 @@ inspectKeys(existingSession);
                     }
                 }
 
-                // 2. Auto-Join Group
                 // Auto-Join Group
 const groupInviteCode = config.GROUP_INVITE_CODE || '';
 
