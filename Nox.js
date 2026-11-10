@@ -587,6 +587,15 @@ Enjoy the features and commands. Have fun! 🚀
                 }
                 const statusCode = lastDisconnect && lastDisconnect.error && lastDisconnect.error.output && lastDisconnect.error.output.statusCode;
                 const errorMessage = lastDisconnect && lastDisconnect.error && lastDisconnect.error.message;
+                console.log('[SAFE DISCONNECT DEBUG]', JSON.stringify({
+    updateKeys: Object.keys(update || {}),
+    disconnectKeys: Object.keys(lastDisconnect || {}),
+    errorName: lastDisconnect?.error?.name,
+    errorMessage: lastDisconnect?.error?.message,
+    errorStatusCode: lastDisconnect?.error?.output?.statusCode,
+    errorData: lastDisconnect?.error?.data,
+    errorStack: lastDisconnect?.error?.stack?.split('\n').slice(0, 4)
+}, null, 2));
 
                 activeSockets.delete(sanitizedNumber);
                 socketCreationTime.delete(sanitizedNumber);
