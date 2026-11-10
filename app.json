@@ -1,6 +1,6 @@
 {
   "name": "SCANTY MD BOT",
-  "description": "SCANTY MD BOT — WhatsApp mini bot web multi-device made by 🝛꯭𝐍𝚯𝐗 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋",
+  "description": "SCANTY MD BOT — WhatsApp mini bot web multi-device made by SCANTY ADS",
   "logo": "https://files.catbox.moe/7euvhs.jpg",
   "keywords": ["Scanty", "whatsapp-bot", "baileys", "free-bot"],
   "success_url": "/",
@@ -11,11 +11,11 @@
       "required": true,
       "value": ""
     },
-    "BOT_NAME": {
-      "description": "Display name used by the bot and pairing page.",
-      "required": false,
-      "value": "SCANTY MD BOT"
-    },
+"BOT_NAME": {
+  "description": "Display name used by the bot and pairing page.",
+  "required": false,
+  "value": "SCANTY MD BOT"
+}
     "OWNER_NUMBER": {
       "description": "Owner WhatsApp number with country code.",
       "required": false,
