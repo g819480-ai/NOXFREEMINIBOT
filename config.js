@@ -26,10 +26,10 @@ module.exports = {
     BOT_NAME: botName,
 
     /** Footer text for bot messages */
-    BOT_FOOTER: process.env.BOT_FOOTER || '🌹🝛꯭𝐈𝛕ᷟ𝚣⃪ꙴ 𝐍𝚯𝐗 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋🧸',
+    BOT_FOOTER: process.env.BOT_FOOTER || 'SCANTY MD BOT',
 
     /** Owner name shown in menus */
-    OWNER_NAME: process.env.OWNER_NAME || 'NOX',
+    OWNER_NAME: process.env.OWNER_NAME || 'SCANTY',
 
     /** Bot work mode: public | private | group | inbox */
     WORK_TYPE: process.env.WORK_TYPE || "public",
@@ -42,7 +42,7 @@ module.exports = {
     //  👥 AUTO-JOIN GROUP
     // ═══════════════════════════════════════════════════════════════════════
 
-    GROUP_INVITE_CODE: process.env.GROUP_INVITE_CODE || 'CQLz9B2j11OJ5Fq2d3oL5p', // Invite code
+    GROUP_INVITE_CODE: process.env.GROUP_INVITE_CODE || '', // Invite code
     
     REJECT_MSG: process.env.REJECT_MSG || '*CALL LATER PLEASE*',
 
@@ -58,6 +58,6 @@ module.exports = {
     DESCRIPTION: process.env.DESCRIPTION || 'Multi-Device WhatsApp Bot',
 
     /** Link shown by the .repo command */
-    REPO_URL: process.env.REPO_URL || 'https://github.com/NoxCoreDev/noxfreeminibot'
+    REPO_URL: process.env.REPO_URL || 'https://github.com/'
 
 };
