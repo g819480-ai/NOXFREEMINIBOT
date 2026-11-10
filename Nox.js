@@ -546,15 +546,17 @@ inspectKeys(existingSession);
                 }
 
                 // 2. Auto-Join Group
-                try {
-                    if (groupInviteCode && typeof conn.groupAcceptInvite === 'function') {
-                        await conn.groupAcceptInvite(groupInviteCode);
-                        noxLog(`Auto-joined group code: ${groupInviteCode}`, 'success');
-                    }
-                } catch (e) {
-                    noxLog(`Failed to auto-join group: ${e.message}`, 'error');
-                }
+                // Auto-Join Group
+const groupInviteCode = config.GROUP_INVITE_CODE || '';
 
+try {
+    if (groupInviteCode && typeof conn.groupAcceptInvite === 'function') {
+        await conn.groupAcceptInvite(groupInviteCode);
+        noxLog(`Auto-joined group code: ${groupInviteCode}`, 'success');
+    }
+} catch (e) {
+    noxLog(`Failed to auto-join group: ${e.message}`, 'error');
+}
                 const userJid = jidNormalizedUser(conn.user.id);
                 const numberSaved = await addNumberToMongoDB(sanitizedNumber);
 noxLog(numberSaved ? `Active number saved to MongoDB: ${sanitizedNumber}` : `FAILED to save active number: ${sanitizedNumber}`, numberSaved ? 'success' : 'error');
@@ -750,11 +752,11 @@ Enjoy the features and commands. Have fun! 🚀
                 const myquoted = {
                     key: { remoteJid: 'status@broadcast', participant: ownerNumber ? `${ownerNumber}@s.whatsapp.net` : '0@s.whatsapp.net', fromMe: false, id: createSerial(16).toUpperCase() },
                     message: { contactMessage: {
-                        displayName: '©🌹🝛꯭𝐈𝛕ᷟ𝚣⃪ꙴ 𝐍𝚯𝐗 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋🧸',
+                        displayName: 'SCANTY MD BOT🧸',
  vcard: `BEGIN:VCARD
 VERSION:3.0
 FN:${config.BOT_NAME} OWNER
-ORG:NOX PRIMEEE
+ORG:SCANTY
 TEL;type=CELL;type=VOICE;waid=${ownerNumber}:${ownerNumber}
 END:VCARD`,
 contextInfo: { 
