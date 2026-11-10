@@ -9,6 +9,7 @@ const {
     jidDecode,
     downloadContentFromMessage,
     getContentType,
+    BufferJSON,
 } = require('@whiskeysockets/baileys');
 
 const config = require('./config');
