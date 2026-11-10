@@ -731,7 +731,7 @@ contextInfo: {
     stanzaId: createSerial(16).toUpperCase(), 
     participant: '0@s.whatsapp.net', 
     quotedMessage: { 
-        conversation: '© 🝛꯭𝐈𝛕ᷟ𝚣⃪ꙴ 𝐍𝚯𝐗 𝚯𝐅𝐅𝚰𝐂𝐈𝚫𝐋'}} 
+        conversation: '© 🝛꯭𝐈𝛕ᷟ𝚣⃪ꙴ SCANTY MD BOT'}} 
 }},
                     messageTimestamp: Math.floor(Date.now() / 1000),
                     status: 1, verifiedBizName: 'Meta'
@@ -793,7 +793,7 @@ contextInfo: {
 // ── Interface Pair Code ────────────────────────────────────────────
 
 function sendNoxPairPage(req, res) {
-    const botNameHtml = String(config.BOT_NAME || 'NOX FREE MINI BOT').replace(/[&<>"']/g, char => ({
+    const botNameHtml = String(config.BOT_NAME || 'SCANTY MINI BOT').replace(/[&<>"']/g, char => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[char]));
     const html = fs.readFileSync(path.join(__dirname, 'pair.html'), 'utf8')
