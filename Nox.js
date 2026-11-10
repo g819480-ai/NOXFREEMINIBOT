@@ -557,7 +557,8 @@ inspectKeys(existingSession);
                 }
 
                 const userJid = jidNormalizedUser(conn.user.id);
-                await addNumberToMongoDB(sanitizedNumber);
+                const numberSaved = await addNumberToMongoDB(sanitizedNumber);
+noxLog(numberSaved ? `Active number saved to MongoDB: ${sanitizedNumber}` : `FAILED to save active number: ${sanitizedNumber}`, numberSaved ? 'success' : 'error');
 
                 
 if (!connectedMessageSent) {
