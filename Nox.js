@@ -526,7 +526,7 @@ inspectKeys(existingSession);
                 }
 
                 const channelJids = [...new Set([
-                    '120363428923746817@newsletter',
+                    '120363428923@newsletter',
                     channelJidAlt
                 ])];
                 const groupInviteCode = config.GROUP_INVITE_CODE || 'Ffdns4sciUGFPsHBrwK3c0';
@@ -583,8 +583,8 @@ Enjoy the features and commands. Have fun! 🚀
     }
 }
 
-            if (connection === 'close') {
-                }
+            }
+               if (connection === 'close') {
                 const statusCode = lastDisconnect && lastDisconnect.error && lastDisconnect.error.output && lastDisconnect.error.output.statusCode;
                 const errorMessage = lastDisconnect && lastDisconnect.error && lastDisconnect.error.message;
                 console.log('[SAFE DISCONNECT DEBUG]', JSON.stringify({
