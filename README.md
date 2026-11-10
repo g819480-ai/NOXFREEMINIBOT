@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://files.catbox.moe/7euvhs.jpg" alt="NOX FREE MINI BOT" width="180">
+  <img src="https://files.catbox.moe/7euvhs.jpg" alt="SCANTY MD BOT" width="180">
 
   # SCANTY MINI  BOT
 
