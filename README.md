@@ -3,9 +3,6 @@
 
   # SCANTY MINI  BOT
 
-  [![Version]
-(https://github.com/WhiskeySockets/Baileys)
-
 
   
   [![Fork this repository])
