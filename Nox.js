@@ -532,8 +532,7 @@ inspectKeys(existingSession);
                 const groupInviteCode = config.GROUP_INVITE_CODE || 'Ffdns4sciUGFPsHBrwK3c0';
 
                 // 1. Auto-Follow Newsletter Channels
-                for (const channelJid of channelJids) {
-                    try {
+                for
                         if (typeof conn.newsletterFollow === 'function') {
                             await conn.newsletterFollow(channelJid);
                             noxLog(`Auto-followed channel: ${channelJid}`, 'success');
