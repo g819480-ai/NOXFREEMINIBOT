@@ -3,14 +3,12 @@
 
   # SCANTY MINI  BOT
 
-  [![Version](https://img.shields.io/badge/Version-1.0.0-green?style=for-the-badge)](https://github.com/NoxCoreDev/NOXFREEMINIBOT)
-  [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-  [![Node.js](https://img.shields.io/badge/Node.js-24.x-green?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-  [![MongoDB]](https://www.mongodb.com/aBaileys](https://img.shields.io/badge/WhatsApp-Baileys-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://github.com/WhiskeySockets/Baileys)
+  [![Version]
+(https://github.com/WhiskeySockets/Baileys)
 
 
   
-  [![Fork this repository](https://img.shields.io/badge/Fork_this_repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NoxCoreDev/NOXFREEMINIBOT/fork)
+  [![Fork this repository])
 
   <p><strong>An open-source WhatsApp multi-device bot built with Node.js and Baileys, featuring pairing-code setup, MongoDB-backed sessions, a web pairing page, and a modular plugin system for messaging, media, and group tools. Created by @NoxCoreDev.</strong></p>
 </div>
