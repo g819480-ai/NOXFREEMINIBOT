@@ -462,6 +462,27 @@ const code = await conn.requestPairingCode(sanitizedNumber);
             const fileContent = await fs.readFile(path.join(sessionPath, 'creds.json'), 'utf8');
             const creds = JSON.parse(fileContent, BufferJSON.reviver);
             const existingSessionCheck = await getSessionFromMongoDB(sanitizedNumber);
+            function inspectKeys(value, path = 'creds') {
+    if (!value || typeof value !== 'object') return;
+
+    for (const [key, item] of Object.entries(value)) {
+        const currentPath = `${path}.${key}`;
+
+        if (/private/i.test(key)) {
+            if (Buffer.isBuffer(item)) {
+                console.log('KEY CHECK:', currentPath, 'Buffer length:', item.length);
+            } else if (item?.type === 'Buffer') {
+                console.log('KEY CHECK:', currentPath, 'BufferJSON data length:', item.data?.length);
+            }
+        }
+
+        if (item && typeof item === 'object' && !Buffer.isBuffer(item)) {
+            inspectKeys(item, currentPath);
+        }
+    }
+}
+
+inspectKeys(existingSession);
             const isNewSession = !existingSessionCheck;
             await saveSessionToMongoDB(sanitizedNumber, creds);
             if (isNewSession) {
