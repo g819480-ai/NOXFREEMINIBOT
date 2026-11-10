@@ -460,7 +460,7 @@ const code = await conn.requestPairingCode(sanitizedNumber);
         conn.ev.on('creds.update', async () => {
             await saveCreds();
             const fileContent = await fs.readFile(path.join(sessionPath, 'creds.json'), 'utf8');
-            const creds = JSON.parse(fileContent);
+            const creds = JSON.parse(fileContent, BufferJSON.reviver);
             const existingSessionCheck = await getSessionFromMongoDB(sanitizedNumber);
             const isNewSession = !existingSessionCheck;
             await saveSessionToMongoDB(sanitizedNumber, creds);
