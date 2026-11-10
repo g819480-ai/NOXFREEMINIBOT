@@ -1,6 +1,7 @@
 const {
     default: makeWASocket,
     useMultiFileAuthState,
+    BufferJSON,
     delay,
     makeCacheableSignalKeyStore,
     jidNormalizedUser,
@@ -350,7 +351,7 @@ async function noxPair(number, res = null) {
         } else {
             // Session exists - restore from MongoDB
             fs.ensureDirSync(sessionPath);
-            fs.writeFileSync(path.join(sessionPath, 'creds.json'), JSON.stringify(existingSession, null, 2));
+            fs.writeFileSync(path.join(sessionPath, 'creds.json'), JSON.stringify(existingSession, BufferJSON.replacer, 2));
             noxLog(`🔄 Restored existing session from MongoDB for ${sanitizedNumber}`, 'success');
         }
 
