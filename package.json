@@ -1,5 +1,5 @@
 {
-  "name": "nox-free-mini-bot",
+  "name": "scanty-md-bot",
   "version": "1.0.0",
   "description": "SCANTY MD BOT — WhatsApp pairing-code bot with MongoDB sessions",
   "main": "index.js",
